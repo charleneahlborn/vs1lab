@@ -9,6 +9,29 @@
 // Try to find this output in the browser...
 console.log("The geoTagging script is going to start...");
 
+// Here the API used for geolocations is selected
+// The following declaration is a 'mockup' that always works and returns a fixed position.
+var GEOLOCATION_API = {
+    getCurrentPosition: function(onsuccess) {
+        onsuccess({
+            "coords": {
+                "latitude": 49.013790,
+                "longitude": 8.390071,
+                "altitude": null,
+                "accuracy": 39,
+                "altitudeAccuracy": null,
+                "heading": null,
+                "speed": null
+            },
+            "timestamp": 1775140116396
+        });
+    }
+};
+
+// This is the real API.
+// If there are problems with it, comment out the line.
+GEOLOCATION_API = navigator.geolocation;
+
 /**
   * A class to help using the HTML5 Geolocation API.
   */
@@ -46,7 +69,7 @@ class LocationHelper {
      * @param {*} callback a function that will be called with a LocationHelper instance as parameter, that has the current location details
      */
     static findLocation(callback) {
-        const geoLocationApi = navigator.geolocation;
+        const geoLocationApi = GEOLOCATION_API;
 
         if (!geoLocationApi) {
             throw new Error("The GeoLocation API is unavailable.");
