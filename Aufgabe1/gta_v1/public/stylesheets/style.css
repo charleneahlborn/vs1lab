@@ -109,12 +109,33 @@ a {
 
 /* ### TODO ### Styles for Header Component */
 
-/* ... your code here ... */
+.header .row {
+  align-items: center; 
+  padding: 30px;
+  background-color: #dedcdc;
+}
 
+.header__image {
+  max-width: 100%; 
+  max-height: 60px; 
+  object-fit: contain;
+
+}
+
+.header__title{
+  text-align: center;
+}
+
+.header__navigation{
+  text-align: right;
+}
 
 /* ### TODO ### Styles for Main Component */
 
-/* ... your code here ... */
+.main {
+  padding: 30px;
+  flex: 1;
+}
 
 
 /* ### TODO ### Styles for Tagging component */
@@ -124,12 +145,25 @@ a {
 
 /* ### TODO ### Styles for Discovery component */
 
-/* ... your code here ... */
+.discovery__wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
 
+.discovery__map img {
+  width: 100%; 
+  height: auto; 
+  display: block; 
+}
 
 /* ### TODO ### Styles for Footer Component */
 
-/* ... your code here ... */
+.footer .row{
+  align-items: left; 
+  padding: 30px;
+  background-color: #dedcdc;
+}
 
 
 /* ### TODO ### Media Queries */
