@@ -24,7 +24,7 @@ html {
 /* Variables (example: see declaration for "a" below) */
 
 :root {
-  --link-color: #00B7FF;
+  --link-color: #039bd7;
   --background-color: #efefef;
   --border-color: #cdcdcd;
   --gray-color: #666;
@@ -112,7 +112,7 @@ a {
 .header .row {
   align-items: center; 
   padding: 30px;
-  background-color: #dedcdc;
+  background-color: #f7bdbd;
 }
 
 .header__image {
@@ -142,6 +142,28 @@ a {
 
 /* ... your code here ... */
 
+fieldset {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  margin-bottom: 20px;
+}
+
+fieldset br{
+  display: none;
+}
+
+label{
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+
+input{
+  padding: 10px;
+  margin-bottom: 5px;
+  margin-top: 3px;
+  width: 100%;
+}
 
 /* ### TODO ### Styles for Discovery component */
 
@@ -157,12 +179,28 @@ a {
   display: block; 
 }
 
+ul li {
+  background-color: #f7bdbd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+  list-style-type: none;
+}
+
+#ipt_keyword{
+  width: 30%;
+}
+
+.discovery__search input[type=submit]{
+  width: 30%;
+}
+
 /* ### TODO ### Styles for Footer Component */
 
 .footer .row{
   align-items: left; 
   padding: 30px;
-  background-color: #dedcdc;
+  background-color: #f7bdbd;
 }
 
 
