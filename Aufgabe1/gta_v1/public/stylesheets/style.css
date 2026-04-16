@@ -205,5 +205,30 @@ ul li {
 
 
 /* ### TODO ### Media Queries */
+@media (max-width: 820px) {
+  .row {
+    flex-direction: column;
+  }
 
+  .col-3,
+  .col-4,
+  .col-6,
+  .col-9 {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .header__navigation {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .header__title {
+    text-align: center;
+  }
+
+  .discovery__wrapper {
+    flex-direction: column;
+  }
+}
 /* ... your code here ... */
