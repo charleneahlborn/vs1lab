@@ -44,17 +44,19 @@
                 <form id="tag-form" action="/tagging" method="post">
                     <fieldset>
                         <legend>Add a new GeoTag</legend>
-                        <label for="latitude">Latitude</label><br>
-                        <input type="text" id="ipt_latitude" name="latitude" value="52.5200" readonly><br>
+                        <label for="latitude">Latitude</label>
+                        <input type="text" id="ipt_latitude" name="latitude" value="52.5200" readonly>
 
-                        <label for="longitude">Longitude</label><br>
-                        <input type="text" id="ipt_longitude" name="longitude" value="13.4050" readonly><br>
+                        <label for="longitude">Longitude</label>
+                        <input type="text" id="ipt_longitude" name="longitude" value="13.4050" readonly>
 
-                        <label for="name">Name</label><br>
-                        <input type="text" id="ipt_name" name="name" placeholder="Castle" required maxlength="10"><br>
+                        <label for="name">Name</label>
+                        <input type="text" id="ipt_name" name="name" placeholder="Castle" required maxlength="10">
 
-                        <label for="hashtag">Hashtag</label><br>
-                        <input type="text" id="ipt_hashtag" name="hashtag" placeholder="#sight" maxlength="11" pattern="#.{0,10}"><br> 
+                        <label for="hashtag">Hashtag</label>
+                        <input type="text" id="ipt_hashtag" name="hashtag" placeholder="sight" maxlength="11" pattern="#.{0,10}">
+                        <label for="hashtag">Hashtag</label>
+                        <input type="text" id="ipt_hashtag" name="hashtag" placeholder="#sight" maxlength="11" pattern="#.{0,10}">
                         
                         <input type="submit" value="Add Tag">
                     </fieldset>
@@ -72,8 +74,11 @@
                 <form class="discovery__search" id="discoveryFilterForm" action="/discovery" method="post">
                     <fieldset>
                         <legend>Search GeoTags</legend>
-                        <label for="ipt_searchterm">Search by keywords:</label><br>
-                        <input type="text" id="ipt_searchterm" name="searchterm" placeholder="view"><br>
+                        <label for="latitude">Search by keywords:</label>
+                        <input type="text" id="ipt_keyword" name="keyword" placeholder="view">
+                    
+                        <label for="ipt_searchterm">Search by keywords:</label>
+                        <input type="text" id="ipt_searchterm" name="searchterm" placeholder="view">
 
                         <input type="hidden" id="hidden_latitude" name="latitude">
                         <input type="hidden" id="hidden_longitude" name="longitude">
