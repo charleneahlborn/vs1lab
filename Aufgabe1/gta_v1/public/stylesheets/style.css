@@ -44,6 +44,11 @@ a {
   color: var(--link-color);
 }
 
+h2 {
+  margin-bottom: 10px;
+}
+
+
 /* ### TODO ### Styles for other HTML elements */
 
 /* ... your code here ... */
@@ -183,7 +188,7 @@ ul li {
   list-style-type: none;
 }
 
-#ipt_keyword{
+#ipt_searchterm{
   width: 30%;
 }
 
