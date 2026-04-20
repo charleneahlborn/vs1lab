@@ -149,10 +149,6 @@ fieldset {
   margin-bottom: 20px;
 }
 
-fieldset br{
-  display: none;
-}
-
 label{
   margin-bottom: 0;
   margin-top: 5px;
