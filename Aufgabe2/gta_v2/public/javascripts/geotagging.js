@@ -141,8 +141,46 @@ class MapManager {
  */
 // ... your code here ...
 
+const mapManager = new MapManager();
 
-// Wait for the page to fully load its DOM content, then call updateLocation
-document.addEventListener("DOMContentLoaded", () => {
-    alert("Please change the script 'geotagging.js'");
-});
+/**
+ * A function to retrieve the current location and update the page.
+ * It is called once the page has been fully loaded.
+ */
+function updateLocation() {
+    
+    LocationHelper.findLocation((locationHelper) => {
+        
+      
+        const lat = locationHelper.latitude;
+        const lon = locationHelper.longitude;
+
+        document.getElementById("ipt_latitude").value = lat;
+        document.getElementById("ipt_longitude").value = lon;
+
+       
+        document.getElementById("hidden_latitude").value = lat;
+        document.getElementById("hidden_longitude").value = lon;
+
+
+        mapManager.initMap(lat, lon); 
+        
+        
+        mapManager.updateMarkers(lat, lon);
+
+        const placeholderImg = document.getElementById("mapView"); 
+        
+    
+        const placeholderText = document.querySelector("#map span");
+
+        if (placeholderImg) {
+            placeholderImg.remove();
+        }
+        if (placeholderText) {
+            placeholderText.remove();
+        }
+    });
+}
+
+
+document.addEventListener("DOMContentLoaded", updateLocation);
