@@ -51,16 +51,16 @@
                 <form id="tag-form" action="/tagging" method="post">
                     <fieldset>
                         <legend>Add a new GeoTag</legend>
-                        <label for="latitude">Latitude</label>
-                        <input type="text" id="ipt_latitude" name="latitude" value="52.5200" readonly>
+                        <label for="ipt_latitude">Latitude</label>
+                        <input type="text" id="ipt_latitude" name="latitude" readonly>
 
-                        <label for="longitude">Longitude</label>
-                        <input type="text" id="ipt_longitude" name="longitude" value="13.4050" readonly>
+                        <label for="ipt_longitude">Longitude</label>
+                        <input type="text" id="ipt_longitude" name="longitude" readonly>
 
-                        <label for="name">Name</label>
+                        <label for="ipt_name">Name</label>
                         <input type="text" id="ipt_name" name="name" placeholder="Castle" required maxlength="10">
 
-                        <label for="hashtag">Hashtag</label>
+                        <label for="ipt_hashtag">Hashtag</label>
                         <input type="text" id="ipt_hashtag" name="hashtag" placeholder="#sight" maxlength="11" pattern="#.{0,10}">
                         
                         <input type="submit" value="Add Tag">
