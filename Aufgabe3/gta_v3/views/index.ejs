@@ -1,5 +1,139 @@
-<!-- TODO: HTML AUS AUFGABE2 HIERHER KOPIEREN UND DIE BEISPIEL-EINTRÄGE DER DISCOVERY-LISTE MIT DEN FOLGENDEN ZEILEN ERSETZEN -->
+<!DOCTYPE html>
 
-<% if (taglist !== undefined) taglist.forEach(function(gtag) { %>
-    <li><%= gtag.name %> ( <%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
-<% }); %>
+<!-- File origin: VS1LAB A1a -->
+
+<!-- Charlene war hier <3 -->
+<!-- hihi-->
+<!-- Constantin Herbert-->
+<!-- Test bidde nicht löschen -->
+<html lang="en">
+
+<head>
+        <!-- Leaflet CSS and JavaScript (in this order) -->
+    <link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoTagApp</title>
+    <link rel="stylesheet" href="./stylesheets/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <header class="header">
+        <div class="row">
+            <div class="col-4"> 
+                <img src="./images/location.png" class="header__image" alt="an image of a map and location">
+            </div>
+            <div class="col-4">
+                <h1 class="header__title">GeoTagApp</h1>
+            </div>
+            <div class="col-4">
+                <nav class="header__navigation">
+                <a href="#">About</a> | <a href="#">Help</a> | <a href="/">Home</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="row">
+            <div class="col-3">
+                 <section class="main__tagging tagging">
+                
+                <h2>Tagging</h2>
+
+                <!-- ############### VS1Lab 1a Form 1 Start -->
+                <form id="tag-form" action="/tagging" method="post">
+                    <fieldset>
+                        <legend>Add a new GeoTag</legend>
+                        <label for="ipt_latitude">Latitude</label>
+                        <input type="text" id="ipt_latitude" name="latitude" readonly>
+
+                        <label for="ipt_longitude">Longitude</label>
+                        <input type="text" id="ipt_longitude" name="longitude" readonly>
+
+                        <label for="ipt_name">Name</label>
+                        <input type="text" id="ipt_name" name="name" placeholder="Castle" required maxlength="10">
+
+                        <label for="ipt_hashtag">Hashtag</label>
+                        <input type="text" id="ipt_hashtag" name="hashtag" placeholder="#sight" maxlength="11" pattern="#.{0,10}">
+                        
+                        <input type="submit" value="Add Tag">
+                    </fieldset>
+                </form>
+                <!-- ############### VS1Lab 1a Form 1 End -->
+
+            </section>
+            </div>
+           
+            <div class="col-9">
+                <section class="main__discovery discovery">
+                <h2 class="discovery__title">Discovery</h2>
+
+                <!-- ############### VS1Lab 1a Form 2 Start -->
+                <form class="discovery__search" id="discoveryFilterForm" action="/discovery" method="post">
+                    <fieldset>
+                        <legend>Search GeoTags</legend>
+                        
+                        <label for="ipt_searchterm">Search by keywords:</label>
+                        <input type="text" id="ipt_searchterm" name="searchterm" placeholder="view">
+
+                        <input type="hidden" id="hidden_latitude" name="latitude">
+                        <input type="hidden" id="hidden_longitude" name="longitude">
+
+
+                        <input type="submit" value="Search">
+                    </fieldset>
+                    
+
+                </form>
+                <!-- ############### VS1Lab 1a Form 2 End -->
+                <div class="row">
+                <div class="discovery__wrapper">
+                    <div class="col-6">
+                        <div class="discovery__taglist">
+                        <ul class="discovery__results" id="discoveryResults">
+                            <% if (taglist !== undefined) taglist.forEach(function(gtag) { %>
+                                <li><%= gtag.name %> ( <%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
+                            <% }); %>
+                        </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-6">
+                        <div id="map" class="discovery__map">
+                        <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" />
+                        <span>Result map</span>
+                    </div>
+                    </div>
+                </div>
+
+                </div>
+                
+            </section>
+            </div>
+            
+        </div>
+
+    </main>
+    <footer class="footer">
+        <div class="row"> 
+            
+         
+            <span>(c) 2021/22 HKA_IWI_VSYS</span>
+
+            
+        </div>
+    </footer>
+     <script src="./javascripts/geotagging.js"></script>
+        
+    
+</body>
+
+</html>
+
