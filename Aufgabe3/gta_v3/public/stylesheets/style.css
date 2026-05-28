@@ -1,0 +1,239 @@
+/*
+  File origin: VS1LAB A1b  
+
+  CSS style is BEM. Classes used for CSS, IDs for JavaScript querying (future use).
+  CSS variables used for clarity and themability (e.g. through SSR). 
+  Inherited box sizing used for ease of including 3rd party content-box components.
+*/
+
+/* Global styling */
+
+html {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+  /* This approach prevents issues with 3rd party content-box components */
+  box-sizing: inherit;
+}
+
+
+/* Variables (example: see declaration for "a" below) */
+
+:root {
+  --link-color: #039bd7;
+  --background-color: #efefef;
+  --border-color: #cdcdcd;
+  --gray-color: #666;
+}
+
+
+/* HTML element styles */
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--link-color);
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+
+/* ### TODO ### Styles for other HTML elements */
+
+/* ... your code here ... */
+
+
+/* Grid styles (no changes required) */
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.col-1 {
+  width: calc(8.33% - 1rem);
+}
+
+.col-2 {
+  width: calc(16.66% - 1rem);
+}
+
+.col-3 {
+  width: calc(25% - 1rem);
+}
+
+.col-4 {
+  width: calc(33.33% - 1rem);
+}
+
+.col-5 {
+  width: calc(41.66% - 1rem);
+}
+
+.col-6 {
+  width: calc(50% - 1rem);
+}
+
+.col-7 {
+  width: calc(58.33% - 1rem);
+}
+
+.col-8 {
+  width: calc(66.66% - 1rem);
+}
+
+.col-9 {
+  width: calc(75% - 1rem);
+}
+
+.col-10 {
+  width: calc(83.33% - 1rem);
+}
+
+.col-11 {
+  width: calc(91.66% - 1rem);
+}
+
+.col-12 {
+  width: calc(100% - 1rem);
+}
+
+
+/* ### TODO ### Styles for Header Component */
+
+.header .row {
+  align-items: center; 
+  padding: 30px;
+  background-color: #f7bdbd;
+}
+
+.header__image {
+  max-width: 100%; 
+  max-height: 60px; 
+  object-fit: contain;
+
+}
+
+.header__title{
+  text-align: center;
+}
+
+.header__navigation{
+  text-align: right;
+}
+
+/* ### TODO ### Styles for Main Component */
+
+.main {
+  padding: 30px;
+  flex: 1;
+}
+
+
+/* ### TODO ### Styles for Tagging component */
+
+/* ... your code here ... */
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  margin-bottom: 20px;
+}
+
+label{
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+
+input{
+  padding: 10px;
+  margin-bottom: 5px;
+  margin-top: 3px;
+  width: 100%;
+}
+
+/* ### TODO ### Styles for Discovery component */
+
+.discovery__wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.discovery__map img {
+  width: 100%; 
+  height: auto; 
+  display: block; 
+}
+
+ul li {
+  background-color: #f7bdbd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+  list-style-type: none;
+}
+
+#ipt_searchterm{
+  width: 30%;
+}
+
+.discovery__search input[type=submit]{
+  width: 30%;
+}
+
+/* ### TODO ### Styles for Footer Component */
+
+.footer .row{
+  align-items: left; 
+  padding: 30px;
+  background-color: #f7bdbd;
+}
+
+
+/* ### TODO ### Media Queries */
+@media (max-width: 820px) {
+  .row {
+    flex-direction: column;
+  }
+
+  .col-3,
+  .col-4,
+  .col-6,
+  .col-9 {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .header__navigation {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .header__title {
+    text-align: center;
+  }
+
+  .discovery__wrapper {
+    flex-direction: column;
+  }
+}
+/* ... your code here ... */
+
+#map { 
+   height: 500px;
+ }
