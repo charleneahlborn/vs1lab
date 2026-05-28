@@ -30,6 +30,16 @@ const GeoTag = require('../models/geotag');
  */
 // eslint-disable-next-line no-unused-vars
 const GeoTagStore = require('../models/geotag-store');
+const GeoTagExamples = require('../models/geotag-examples');
+
+const store = new GeoTagStore();
+
+GeoTagExamples.tagList.forEach(tagArray => {
+    const neuesTag = new GeoTag(tagArray[0], tagArray[1], tagArray[2], tagArray[3]);
+    store.addGeoTag(neuesTag);
+});
+
+const SEARCH_RADIUS = 6;
 
 /**
  * Route '/' for HTTP 'GET' requests.
@@ -42,7 +52,9 @@ const GeoTagStore = require('../models/geotag-store');
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
-  res.render('index', { taglist: [] })
+  res.render('index', { 
+    taglist: [], lat:"",lon:""
+  })
 });
 
 /**
@@ -60,7 +72,25 @@ router.get('/', (req, res) => {
  * by radius around a given location.
  */
 
-// TODO: ... your code here ...
+router.post('/tagging', (req, res) => {
+
+    const lat = req.body.latitude;
+    const lon = req.body.longitude;
+    const name = req.body.name;
+    const hashtag = req.body.hashtag;
+
+    const newTag = new GeoTag(name, lat, lon, hashtag);
+    store.addGeoTag(newTag);
+
+    const location = { latitude: lat, longitude: lon };
+    const nearbyTags = store.getNearbyGeoTags(location, SEARCH_RADIUS);
+
+    res.render('index', { 
+        taglist: nearbyTags, 
+        lat: lat, 
+        lon: lon 
+    });
+});
 
 /**
  * Route '/discovery' for HTTP 'POST' requests.
@@ -78,6 +108,28 @@ router.get('/', (req, res) => {
  * by radius and keyword.
  */
 
-// TODO: ... your code here ...
+router.post('/discovery', (req, res) => {
+
+    const lat = req.body.latitude;
+    const lon = req.body.longitude;
+    const searchterm = req.body.searchterm;
+
+    const location = { latitude: lat, longitude: lon };
+    let nearbyTags = [];
+
+    if (searchterm) {
+
+        nearbyTags = store.searchNearbyGeoTags(searchterm, location, SEARCH_RADIUS);
+    } else {
+
+        nearbyTags = store.getNearbyGeoTags(location, SEARCH_RADIUS);
+    }
+
+    res.render('index', { 
+        taglist: nearbyTags, 
+        lat: lat, 
+        lon: lon 
+    });
+});
 
 module.exports = router;
