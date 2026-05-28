@@ -52,10 +52,10 @@
                     <fieldset>
                         <legend>Add a new GeoTag</legend>
                         <label for="ipt_latitude">Latitude</label>
-                        <input type="text" id="ipt_latitude" name="latitude" readonly>
+                        <input type="text" id="ipt_latitude" name="latitude" value="<%= lat %>" readonly>
 
                         <label for="ipt_longitude">Longitude</label>
-                        <input type="text" id="ipt_longitude" name="longitude" readonly>
+                        <input type="text" id="ipt_longitude" name="longitude" value="<%= lon %>" readonly>
 
                         <label for="ipt_name">Name</label>
                         <input type="text" id="ipt_name" name="name" placeholder="Castle" required maxlength="10">
@@ -83,8 +83,8 @@
                         <label for="ipt_searchterm">Search by keywords:</label>
                         <input type="text" id="ipt_searchterm" name="searchterm" placeholder="view">
 
-                        <input type="hidden" id="hidden_latitude" name="latitude">
-                        <input type="hidden" id="hidden_longitude" name="longitude">
+                        <input type="hidden" id="hidden_latitude" name="latitude" value="<%= lat %>">
+                        <input type="hidden" id="hidden_longitude" name="longitude" value="<%= lon %>">
 
 
                         <input type="submit" value="Search">
