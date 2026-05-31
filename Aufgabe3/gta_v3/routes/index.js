@@ -39,7 +39,7 @@ GeoTagExamples.tagList.forEach(tagArray => {
     store.addGeoTag(neuesTag);
 });
 
-const SEARCH_RADIUS = 6;
+const SEARCH_RADIUS = 0.05;
 
 /**
  * Route '/' for HTTP 'GET' requests.

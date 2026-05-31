@@ -59,11 +59,15 @@ function updateLocation() {
         } 
     };
 
+    const mapElement = document.getElementById("map");
+    const tagsJson = mapElement.dataset.tags;
+    const tags = JSON.parse(tagsJson);
+
     // Bedingte ausführung von LocationHelper.findLocation()
     
     if(existingLat && existingLon){
         mapManager.initMap(existingLat, existingLon);
-        mapManager.updateMarkers(existingLat, existingLon);
+        mapManager.updateMarkers(existingLat, existingLon, tags);
         removePlaceholders();
     } else{
         LocationHelper.findLocation((locationHelper) => {
@@ -77,7 +81,7 @@ function updateLocation() {
             document.getElementById("hidden_longitude").value = lon;
 
             mapManager.initMap(lat, lon); 
-            mapManager.updateMarkers(lat, lon);
+            mapManager.updateMarkers(lat, lon, tags);
             removePlaceholders();
         });
     } 
