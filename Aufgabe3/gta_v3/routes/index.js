@@ -39,7 +39,7 @@ GeoTagExamples.tagList.forEach(tagArray => {
     store.addGeoTag(neuesTag);
 });
 
-const SEARCH_RADIUS = 6;
+const SEARCH_RADIUS_KM = 0.2
 
 /**
  * Route '/' for HTTP 'GET' requests.
@@ -83,7 +83,7 @@ router.post('/tagging', (req, res) => {
     store.addGeoTag(newTag);
 
     const location = { latitude: lat, longitude: lon };
-    const nearbyTags = store.getNearbyGeoTags(location, SEARCH_RADIUS);
+    const nearbyTags = store.getNearbyGeoTags(location, SEARCH_RADIUS_KM);
 
     res.render('index', { 
         taglist: nearbyTags, 
@@ -119,10 +119,10 @@ router.post('/discovery', (req, res) => {
 
     if (searchterm) {
 
-        nearbyTags = store.searchNearbyGeoTags(searchterm, location, SEARCH_RADIUS);
+        nearbyTags = store.searchNearbyGeoTags(searchterm, location, SEARCH_RADIUS_KM);
     } else {
 
-        nearbyTags = store.getNearbyGeoTags(location, SEARCH_RADIUS);
+        nearbyTags = store.getNearbyGeoTags(location, SEARCH_RADIUS_KM);
     }
 
     res.render('index', { 
