@@ -11,7 +11,10 @@
  */
 class GeoTag {
 
+    static currentId = 1;
+
     constructor(name, latitude, longitude, hashtag) {
+        this.id = (GeoTag.currentId++).toString();
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;

@@ -1,0 +1,44 @@
+### 1. Alle GeoTags abrufen
+# Klicke über dieser Zeile auf "Send Request"
+GET http://localhost:3000/api/geotags
+
+
+### 2. Ein neues GeoTag erstellen (POST)
+# WICHTIG: Die leere Zeile zwischen den Headern und dem JSON-Body muss zwingend vorhanden sein!
+POST http://localhost:3000/api/geotags
+Content-Type: application/json
+
+{
+    "name": "HKA Bib",
+    "latitude": "49.0152",
+    "longitude": "8.3905",
+    "hashtag": "#lernen"
+}
+
+
+### 3. Ein bestimmtes GeoTag abrufen (GET mit ID)
+# Ersetze die '12' am Ende der URL durch die genaue ID, 
+# die dir der Server im vorherigen POST-Request generiert hat!
+GET http://localhost:3000/api/geotags/12
+
+
+### 4. Ein GeoTag ändern (PUT)
+# Auch hier die ID am Ende der URL anpassen
+PUT http://localhost:3000/api/geotags/12
+Content-Type: application/json
+
+{
+    "name": "HKA Bibliothek",
+    "latitude": "49.0152",
+    "longitude": "8.3905",
+    "hashtag": "#klausurenphase"
+}
+
+
+### 5. Ein GeoTag löschen (DELETE)
+# Auch hier die ID am Ende der URL anpassen
+DELETE http://localhost:3000/api/geotags/12
+
+
+### 6. Umkreissuche testen (GET mit Query-Parametern)
+GET http://localhost:3000/api/geotags?latitude=49.013790&longitude=8.404435&searchterm=castle
