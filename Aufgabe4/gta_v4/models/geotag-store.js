@@ -29,32 +29,39 @@ class InMemoryGeoTagStore{
 
     addGeoTag = (geotag) => this.#geotag_array.push(geotag);
 
-    removeGeoTag(name){
-        this.#geotag_array = this.#geotag_array.filter(tag => {
-            return tag.name !== name; 
-        });
-    };
+    getAllGeoTags() {
+        return this.#geotag_array;
+    }
 
 
-    // OLD
-    /*getNearbyGeoTags(location,radius){
-        const radiusSq = radius * radius;
+    getGeoTagById(id) {
+        return this.#geotag_array.find(tag => tag.id === id);
+    }
 
-        return this.#geotag_array.filter(tag => {
 
-            const lat1 = parseFloat(location.latitude);
-            const lon1 = parseFloat(location.longitude);
-            const lat2 = parseFloat(tag.latitude);
-            const lon2 = parseFloat(tag.longitude);
+    updateGeoTag(id, updatedData) {
+        const tag = this.getGeoTagById(id);
+        if (tag) {
+            if (updatedData.name !== undefined) tag.name = updatedData.name;
+            if (updatedData.latitude !== undefined) tag.latitude = updatedData.latitude;
+            if (updatedData.longitude !== undefined) tag.longitude = updatedData.longitude;
+            if (updatedData.hashtag !== undefined) tag.hashtag = updatedData.hashtag;
+            return tag;
+        }
+        return null;
+    }
 
-            const dLat = lat1 - lat2;
-            const dLon = lon1 - lon2;
+    removeGeoTag(id) {
+        const index = this.#geotag_array.findIndex(tag => tag.id === id);
+        if (index !== -1) {
+            const deletedTag = this.#geotag_array[index];
+            this.#geotag_array.splice(index, 1);
+            return deletedTag; 
+        }
+        return null; 
+    }
 
-            const distanceSq = (dLat * dLat) + (dLon * dLon);
 
-            return distanceSq <= radiusSq;
-        });
-    };*/
 
 
     getNearbyGeoTags(location, radius) {
