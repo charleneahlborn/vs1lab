@@ -87,5 +87,34 @@ function updateLocation() {
     } 
 }
 
+function initAjaxForms() {
+    const taggingForm = document.getElementById('tag-form');
+    const discoveryForm = document.getElementById('discoveryFilterForm');
 
-document.addEventListener("DOMContentLoaded", updateLocation);
+    if (taggingForm) {
+        taggingForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            if (!taggingForm.checkValidity()) {
+                taggingForm.reportValidity(); 
+                return; 
+            }
+            console.log("Tagging-Formular ist valide! Bereit für Fetch POST.");
+        });
+    }
+
+    if (discoveryForm) {
+        discoveryForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            if (!discoveryForm.checkValidity()) {
+                discoveryForm.reportValidity();
+                return;
+            }
+            console.log("Discovery-Formular ist valide! Bereit für Fetch GET.");
+        });
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateLocation();
+    initAjaxForms();
+});
