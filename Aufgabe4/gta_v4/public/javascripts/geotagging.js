@@ -98,7 +98,6 @@ function initAjaxForms() {
                 taggingForm.reportValidity(); 
                 return; 
             }
-            console.log("Tagging-Formular ist valide! Bereit für Fetch POST.");
         });
     }
 
@@ -109,7 +108,6 @@ function initAjaxForms() {
                 discoveryForm.reportValidity();
                 return;
             }
-            console.log("Discovery-Formular ist valide! Bereit für Fetch GET.");
         });
     }
 }
