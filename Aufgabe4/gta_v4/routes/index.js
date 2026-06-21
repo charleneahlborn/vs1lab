@@ -35,7 +35,7 @@ GeoTagExamples.tagList.forEach(tagArray => {
     store.addGeoTag(neuesTag);
 });
 
-const SEARCH_RADIUS_KM = 0.2
+const SEARCH_RADIUS_KM = 50;
 
 /**
  * Route '/' for HTTP 'GET' requests.
@@ -48,10 +48,12 @@ const SEARCH_RADIUS_KM = 0.2
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
-  res.render('index', { 
-    taglist: [], lat:"",lon:""
-  })
-});
+    res.render('index', {
+        taglist: [],
+        lat: "",
+        lon: ""
+    });
+}   );
 
 /**
  * Route '/tagging' for HTTP 'POST' requests.
@@ -148,10 +150,11 @@ router.get('/api/geotags', (req, res) => {
     const lat = req.query.latitude;
     const lon = req.query.longitude;
     const searchterm = req.query.searchterm;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
 
     let tags = [];
 
-    // Wenn Koordinaten vorhanden sind, filtere nach Radius
     if (lat && lon) {
         const location = { latitude: lat, longitude: lon };
         if (searchterm) {
@@ -160,15 +163,15 @@ router.get('/api/geotags', (req, res) => {
             tags = store.getNearbyGeoTags(location, SEARCH_RADIUS_KM);
         }
     } else {
-        // HINWEIS: Du brauchst in deinem Store evtl. eine Methode, 
-        // die einfach ALLE Tags zurückgibt, wenn nicht gefiltert wird.
-        // z.B.: tags = store.getAllGeoTags();
-        // Falls du das (noch) nicht hast, setze tags auf dein gesamtes Array.
+        tags = store.getAllGeoTags();
     }
 
-    res.json(tags); // Rendert das Array als JSON
-});
+    const totalCount = tags.length;
+    const start = (page - 1) * limit;
+    const paginated = tags.slice(start, start + limit);
 
+    res.json({ tags: paginated, totalCount, page, limit });
+});
 
 /**
  * Route '/api/geotags' for HTTP 'POST' requests.
