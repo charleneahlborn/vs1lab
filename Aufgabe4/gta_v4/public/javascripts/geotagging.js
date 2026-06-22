@@ -135,14 +135,11 @@ function changePage(delta) {
  * @param {Array} tags - Ein Array von GeoTag-Objekten.
  */
 function updateDiscoveryWidget(tags) {
-    // 1. Ergebnisliste aktualisieren
-    // Hinweis: Prüfe, ob die ID "discoveryResults" mit deiner HTML-Datei übereinstimmt.
     const resultsList = document.getElementById('discoveryResults');
     if (resultsList) {
-        // Alte Liste leeren
+  
         resultsList.innerHTML = ''; 
         
-        // Neue Listenelemente generieren
         tags.forEach(tag => {
             const li = document.createElement('li');
             li.textContent = `${tag.name} (${tag.latitude}, ${tag.longitude}) ${tag.hashtag}`;
@@ -150,139 +147,90 @@ function updateDiscoveryWidget(tags) {
         });
     }
 
-    // 2. Karte aktualisieren
-    // Wir holen uns die aktuellen Koordinaten aus den versteckten Feldern
     const lat = document.getElementById("hidden_latitude").value;
     const lon = document.getElementById("hidden_longitude").value;
     
-    // updateMarkers aufrufen, um die neuen Pins auf der Karte zu setzen
+
     mapManager.updateMarkers(lat, lon, tags);
 }
 
+
 function initAjaxForms() {
     const taggingForm = document.getElementById('tag-form');
-    const discoveryForm = document.getElementById('discoveryFilterForm');
+    const discoveryForm = document.getElementById('discoveryFilterForm'); 
 
-    // --- 1. AJAX Aufruf für das Tagging Formular (HTTP POST) ---
-    if (taggingForm) {
-        taggingForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            if (!taggingForm.checkValidity()) {
-                taggingForm.reportValidity(); 
-                return; 
-            }
-
-            // Formulardaten auslesen
-            const formData = new FormData(taggingForm);
-            
-            // GeoTag-Objekt für den JSON-Body erstellen (Tipp 1)
-            const geoTag = {
-                name: formData.get('name'),
-                latitude: formData.get('latitude'),
-                longitude: formData.get('longitude'),
-                hashtag: formData.get('hashtag')
-            };
-
-            // Fetch API für POST Request aufrufen
-            fetch('/api/geotags', {
-                method: 'POST',
-                headers: {
-                    // Wichtig: Dem Server mitteilen, dass wir JSON senden (Tipp 2)
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(geoTag)
-            })
-            .then(response => response.json()) //Rückübersetzung
-            .then(updatedTags => {
-                // Nach erfolgreichem Speichern das UI aktualisieren
-                updateDiscoveryWidget(updatedTags);
-                // Optional: Formular nach dem Absenden leeren
-                // taggingForm.reset(); 
-            })
-            .catch(error => console.error('Fehler beim Senden des neuen Tags:', error));
-        });  
-    }
-
-    // --- 2. AJAX Aufruf für das Discovery Formular (HTTP GET) ---
-    if (discoveryForm) {
-        discoveryForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            if (!discoveryForm.checkValidity()) {
-                discoveryForm.reportValidity();
-                return;
-            }
-
-            // Suchbegriff und aktuelle Koordinaten auslesen
-            const formData = new FormData(discoveryForm);
-            const searchTerm = formData.get('searchterm') || '';
-            const lat = document.getElementById("hidden_latitude").value;
-            const lon = document.getElementById("hidden_longitude").value;
-
-            // Query-Parameter für die URL zusammenbauen
-            const queryParams = new URLSearchParams({
-                searchterm: searchTerm,
-                latitude: lat,
-                longitude: lon
-            }).toString();
-
-            // Fetch API für GET Request mit Query Parametern aufrufen
-            fetch(`/api/geotags?${queryParams}`, {
-                method: 'GET'
-            })
-            .then(response => response.json())
-            .then(filteredTags => {
-                // Bei erfolgreicher Antwort das UI mit den gefilterten Tags aktualisieren
-                updateDiscoveryWidget(filteredTags);
-            })
-            .catch(error => console.error('Fehler beim Filtern der Tags:', error));
-        });
-    }
-}
-
-/*
-function initAjaxForms() {
-    const taggingForm = document.getElementById('tag-form');
-    const discoveryForm = document.getElementById('discoveryFilterForm');
 
     if (taggingForm) {
         taggingForm.addEventListener('submit', async (event) => {
             event.preventDefault();
+            
             if (!taggingForm.checkValidity()) {
                 taggingForm.reportValidity();
                 return;
             }
 
-            const lat = document.getElementById('ipt_latitude').value;
-            const lon = document.getElementById('ipt_longitude').value;
-            const name = document.getElementById('ipt_name').value;
-            const hashtag = document.getElementById('ipt_hashtag').value;
+            const formData = new FormData(taggingForm);
+            const name = formData.get('name');
+            const lat = formData.get('latitude');
+            const lon = formData.get('longitude');
+            const hashtag = formData.get('hashtag');
 
-            await fetch('/api/geotags', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, latitude: lat, longitude: lon, hashtag })
-            });
+            try {
 
-            // Suchkontext aktualisieren und Seite 1 anzeigen
-            currentSearch.latitude = lat;
-            currentSearch.longitude = lon;
-            currentSearch.searchterm = '';
-            document.getElementById('ipt_name').value = '';
-            fetchAndDisplay(1);
+                await fetch('/api/geotags', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, latitude: lat, longitude: lon, hashtag })
+                });
+
+                const searchInput = discoveryForm ? discoveryForm.querySelector('input[name="searchterm"]') : null;
+                const activeSearch = searchInput ? searchInput.value : '';
+
+
+                currentSearch.latitude = lat;
+                currentSearch.longitude = lon;
+                currentSearch.searchterm = activeSearch;
+                
+
+                const nameInput = taggingForm.querySelector('input[name="name"]');
+                const hashtagInput = taggingForm.querySelector('input[name="hashtag"]');
+                if (nameInput) nameInput.value = '';
+                if (hashtagInput) hashtagInput.value = '';
+                
+
+                let checkUrl = `/api/geotags?latitude=${lat}&longitude=${lon}&limit=1`;
+                if (activeSearch) {
+                    checkUrl += `&searchterm=${encodeURIComponent(activeSearch)}`;
+                }
+
+                const checkRes = await fetch(checkUrl);
+                const checkData = await checkRes.json();
+                
+                const lastPage = Math.ceil(checkData.totalCount / PAGE_SIZE) || 1;
+                
+                fetchAndDisplay(lastPage);
+                
+            } catch (error) {
+                console.error('Fehler beim Speichern des neuen Tags:', error);
+            }
         });
     }
+
 
     if (discoveryForm) {
         discoveryForm.addEventListener('submit', async (event) => {
             event.preventDefault();
+            
             if (!discoveryForm.checkValidity()) {
                 discoveryForm.reportValidity();
                 return;
             }
 
+            const formData = new FormData(discoveryForm);
+            const searchterm = formData.get('searchterm') || '';
+            
             const lat = document.getElementById('hidden_latitude').value;
             const lon = document.getElementById('hidden_longitude').value;
-            const searchterm = document.getElementById('ipt_searchterm').value;
 
             currentSearch.latitude = lat;
             currentSearch.longitude = lon;
@@ -291,7 +239,7 @@ function initAjaxForms() {
             fetchAndDisplay(1);
         });
     }
-} */
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     updateLocation();

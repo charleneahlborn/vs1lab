@@ -150,8 +150,10 @@ router.get('/api/geotags', (req, res) => {
     const lat = req.query.latitude;
     const lon = req.query.longitude;
     const searchterm = req.query.searchterm;
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5;
+    
+
+    const page = parseInt(req.query.page) || 1;   
+    const limit = parseInt(req.query.limit) || 5; 
 
     let tags = [];
 
@@ -163,14 +165,18 @@ router.get('/api/geotags', (req, res) => {
             tags = store.getNearbyGeoTags(location, SEARCH_RADIUS_KM);
         }
     } else {
-        tags = store.getAllGeoTags();
+        tags = store.getAllGeoTags(); 
     }
+    const totalCount = tags.length; 
 
-    const totalCount = tags.length;
-    const start = (page - 1) * limit;
-    const paginated = tags.slice(start, start + limit);
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const paginatedTags = tags.slice(startIndex, endIndex);
 
-    res.json({ tags: paginated, totalCount, page, limit });
+    res.json({
+        tags: paginatedTags,
+        totalCount: totalCount
+    });
 });
 
 /**
