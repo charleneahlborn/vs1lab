@@ -41,3 +41,14 @@ DELETE http://localhost:3000/api/geotags/12
 
 ### 6. Umkreissuche testen (GET mit Query-Parametern)
 GET http://localhost:3000/api/geotags?latitude=49.013790&longitude=8.404435&searchterm=castle
+
+### 7. Pagination testen - Seite 1
+GET http://localhost:3000/api/geotags?latitude=49.013790&longitude=8.390071&page=1&limit=5
+
+
+### 8. Pagination testen - Seite 2
+GET http://localhost:3000/api/geotags?latitude=49.013790&longitude=8.390071&page=2&limit=5
+
+
+### 9. Pagination mit Suchbegriff
+GET http://localhost:3000/api/geotags?latitude=49.013790&longitude=8.390071&searchterm=campus&page=1&limit=3
